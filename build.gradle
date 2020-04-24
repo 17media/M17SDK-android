@@ -59,13 +59,6 @@ allprojects {
 
         maven {
             url "https://raw.githubusercontent.com/17media/M17_SDK_Released/master/releases"
-            credentials(HttpHeaderCredentials) {
-                name = "Authorization"
-                value = "Bearer "
-            }
-            authentication {
-                header(HttpHeaderAuthentication)
-            }
         }
     }
 }

@@ -1,20 +1,10 @@
 # M17SDK-Android
 
-## Generate your github authorization
-![](website/github_generate_auth.png)
-
 ## Gradle
 ### Repositories
 ```
 maven {
     url "https://raw.githubusercontent.com/17media/M17_SDK_Released/master/releases"
-    credentials(HttpHeaderCredentials) {
-        name = "Authorization"
-        value = "Bearer {Input Your Github Authorization}"
-    }
-    authentication {
-        header(HttpHeaderAuthentication)
-    }
 }
 ```
 
