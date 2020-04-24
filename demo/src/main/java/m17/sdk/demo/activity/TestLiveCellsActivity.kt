@@ -3,6 +3,7 @@ package m17.sdk.demo.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.m17ent.core.module.sdk.M17Sdk
 import com.m17ent.core.module.sdk.dto.M17License
@@ -26,7 +27,7 @@ class TestLiveCellsActivity : AppCompatActivity() {
 
         M17Sdk.getInstance().getLicense(object: M17LicenseCallback {
             override fun onSuccess(license: M17License) {
-                license?.apply {
+                license.apply {
                     showLiveListFragment(this)
                 }
             }
@@ -38,26 +39,27 @@ class TestLiveCellsActivity : AppCompatActivity() {
 
     fun showLiveListFragment(license: M17License){
 
-        val fragment = M17Sdk.getInstance().createLiveListFragment(license?.getRegionListFilterConfig())
+        license.getM17ListFilterConfig() // default: region
+        license.getM17ListFilterConfig(openRegion = true, openLabel = true, openUser = true)
 
-        fragment?.apply {
+        M17Sdk.getInstance().createLiveListFragment(license.getM17ListFilterConfig())?.let {
 
             //Customer -- START
-            setRenderCell(object : M17LiveCellRender {
+            it.setRenderCell(object : M17LiveCellRender {
                 override fun renderCell(): M17LiveCellBaseView {
                     return TestLiveCellLayout(this@TestLiveCellsActivity)
                 }
             })
             //Customer -- END
 
-            setOnScrollListener(object: RecyclerView.OnScrollListener(){
+            it.setOnScrollListener(object: RecyclerView.OnScrollListener(){
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {}
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {}
             })
 
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.frame, fragment, "TestLiveListFragment")
+                .replace(R.id.frame, it as Fragment, "TestLiveListFragment")
                 .addToBackStack(null)
                 .commit()
         }

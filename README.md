@@ -28,8 +28,11 @@ dataBinding {
 ### Dependencies
 ```
 //M17SDK
-implementation "com.m17ent:core:1.2.1"
+implementation "com.m17ent:core:1.3.0"
 implementation 'com.android.support:preference-v14'
+
+//Material
+implementation "com.google.android.material:material:1.1.0"
     
 //Kotlin
 implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -58,26 +61,24 @@ implementation "androidx.paging:paging-rxjava2:$paging_version"
 implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 ```
 
-## Application
 ### SDK Init
 ```
-override fun onCreate() {
-   super.onCreate()
-   M17Sdk.getInstance().initSdkApplication(M17SdkConfig({"Input Your License"}))
-}
+M17Sdk.getInstance().initSdk(M17SdkConfig({"Input Your License"}))
 ```
 
-### Get your license to Show Live List
- - M17Sdk.getInstance().getLicense(M17LicenseCallback {
-               override fun onSuccess(license: M17License) {
-                   ``` Handle Your License ```
-                   ``` ex.license.getRegionlListFilterConfig() is M17ListFilterConfig ```
-               }
+### Get your license
+```  
+ M17Sdk.getInstance().getLicense(M17LicenseCallback {
 
-               override fun onError(error: String) {
-                    ``` Handle Your Error ```
-               }
-           })
+       override fun onSuccess(license: M17License) {
+           Handle Your License
+       }
+    
+       override fun onError(error: String) {
+            Handle Your Error
+       }
+ })
+``` 
 
 ### External User ID
  - An external user ID is used to associate with M17 account. There's some features require users binding their account to M17 account beforehand. In this case, you have to set your user id as your external user id. If the external user id haven't been set, the app will prompt an error message if the feature requires users binding 17 account.
@@ -91,14 +92,41 @@ override fun onCreate() {
        1.Update external user id after setting up M17Sdk.
        2.Update external user id once your user logged in and has a user id.
 
-### Class Reference
- - (Interface) M17LiveCellBaseView - The view has to confirm this interface to implement in your custom live cell layout.
 
-### How to get the custom Fragment of live list 
-![](website/LiveListFragment.png)
+### How to get the custom cell of live list 
+ - 1. call createLiveListFragment(M17ListFilterConfig) in M17Sdk
+ - 2. setRenderCell(M17LiveCellRender)
+ - 3. return your custom M17LiveCellBaseView
+ ``` 
+ M17Sdk.getInstance().createLiveListFragment(M17ListFilterConfig)?.let {
+     it.setRenderCell(object : M17LiveCellRender {
+         override fun renderCell(): M17LiveCellBaseView {
+             return TestLiveCellLayout(this@TestLiveCellsActivity)
+         }
+     })
+
+     supportFragmentManager
+         .beginTransaction()
+         .replace(R.id.frame, it as Fragment, "TestLiveListFragment")
+         .addToBackStack(null)
+         .commit()
+ }
+ ``` 
+
+### How to filter the data of Live List
+ - There are three types of filter. `regionFilters`, `labelFilters`, `userIdFilters`, These functions return region filters by default.
+ - call getM17ListFilterConfig(regionFilters:Boolean, labelFilters:Boolean, userIdFilters:Boolean) in M17License
+```
+ex. license.getM17ListFilterConfig() // default: region
+        
+ex. license.getM17ListFilterConfig(openRegion = true, openLabel = true, openUser = true)
+
+```
 
 ### How to implement your custom layout of live cell
+ - (Interface) M17LiveCellBaseView - The view has to confirm this interface to implement in your custom live cell layout.
 ![](website/LiveCellBaseView.png)
+
 
 ### Set your proguard-rules.pro
 ```
