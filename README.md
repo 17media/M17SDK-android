@@ -18,7 +18,7 @@ dataBinding {
 ### Dependencies
 ```
 //M17SDK
-implementation "com.m17ent:core:1.3.0"
+implementation "com.m17ent:core:1.3.1"
 implementation 'com.android.support:preference-v14'
 
 //Material
@@ -81,7 +81,6 @@ M17Sdk.getInstance().initSdk(M17SdkConfig({"Input Your License"}))
 
        1.Update external user id after setting up M17Sdk.
        2.Update external user id once your user logged in and has a user id.
-
 
 ### How to get the custom cell of live list 
  - 1. call createLiveListFragment(M17ListFilterConfig) in M17Sdk

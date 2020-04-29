@@ -62,6 +62,13 @@
 -keepattributes Exceptions
 # Pubnub -- END
 
+#ABLY -- START
+-keep class io.ably.** { *; }
+-keep class org.java_websocket.** { *; }
+-keep class org.msgpack.** { *; }
+#ABLY -- END
+
+
 # Ijk -- START
 -keep class tv.danmaku.ijk.media.** { *; }
 # Ijk -- END
