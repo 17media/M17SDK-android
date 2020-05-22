@@ -18,14 +18,14 @@ dataBinding {
 ### Dependencies
 ```
 //M17SDK
-implementation "com.m17ent:core:1.3.1"
+implementation "com.m17ent:core:1.4.0"
 implementation 'com.android.support:preference-v14'
 
 //Material
 implementation "com.google.android.material:material:1.1.0"
     
 //Kotlin
-implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50"
 
 //Android X
 implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -35,17 +35,17 @@ implementation 'androidx.core:core-ktx:1.1.0'
 implementation 'androidx.viewpager2:viewpager2:1.0.0'
 
 //Koin
-implementation "org.koin:koin-android:$koin"
+implementation "org.koin:koin-android:2.0.1"
 
 //Retrofit
-implementation "com.squareup.okhttp3:okhttp:$okhttp"
+implementation "com.squareup.okhttp3:okhttp:4.2.2"
 
 //RxJava
-implementation "io.reactivex.rxjava2:rxjava:$rxJava"
+implementation "io.reactivex.rxjava2:rxjava:2.2.10"
 
 //Paging
-implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-implementation "androidx.paging:paging-rxjava2:$paging_version"
+implementation "androidx.paging:paging-runtime-ktx:2.1.0"
+implementation "androidx.paging:paging-rxjava2:2.1.0"
 
 //Constraint Layout
 implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -69,6 +69,16 @@ M17Sdk.getInstance().initSdk(M17SdkConfig({"Input Your License"}))
        }
  })
 ``` 
+
+### How to set your company's logo
+ - we provide the four logo styles :
+  1. When the logo is horizontal, please place it within the range of 194x66
+  2. When the logo is vertical, please place it within the range of 66x194
+  3. When the logo is square or circle, please place it within the range of 98x98
+  4. When the logo is irregular shape, please place it within the range of 194x194
+```
+M17Sdk.getInstance().setLogo(resourceId) // default: 17 logo
+```
 
 ### External User ID
  - An external user ID is used to associate with M17 account. There's some features require users binding their account to M17 account beforehand. In this case, you have to set your user id as your external user id. If the external user id haven't been set, the app will prompt an error message if the feature requires users binding 17 account.
@@ -116,6 +126,13 @@ ex. license.getM17ListFilterConfig(openRegion = true, openLabel = true, openUser
  - (Interface) M17LiveCellBaseView - The view has to confirm this interface to implement in your custom live cell layout.
 ![](website/LiveCellBaseView.png)
 
+
+### Sign Out
+
+Call this method when log user out
+``` 
+M17Sdk.getInstance().signOut()
+``` 
 
 ### Set your proguard-rules.pro
 ```

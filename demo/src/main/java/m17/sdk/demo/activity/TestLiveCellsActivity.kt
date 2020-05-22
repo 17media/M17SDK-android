@@ -1,7 +1,6 @@
 package m17.sdk.demo.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -39,8 +38,10 @@ class TestLiveCellsActivity : AppCompatActivity() {
 
     fun showLiveListFragment(license: M17License){
 
-        license.getM17ListFilterConfig() // default: region
-        license.getM17ListFilterConfig(openRegion = true, openLabel = true, openUser = true)
+
+        license.getM17ListFilterConfig(openRegion = true, openLabel = true, openUser = true) //default:license.getM17ListFilterConfig()
+
+        M17Sdk.getInstance().setLogo(R.drawable.ic_sample_logo) //set logo, default:17 logo
 
         M17Sdk.getInstance().createLiveListFragment(license.getM17ListFilterConfig())?.let {
 
